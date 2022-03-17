@@ -1,0 +1,77 @@
+(https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html)
+
+https://aws.amazon.com/premiumsupport/knowledge-center/s3-multipart-upload-cli/
+
+Multipart upload allows you to upload a single object as a set of parts. Each part is a contiguous portion of the object's data. You can upload these object parts independently and in any order. If transmission of any part fails, you can retransmit that part without affecting other parts. After all parts of your object are uploaded, Amazon S3 assembles these parts and creates the object.
+
+In general, when your object size reaches 100 MB, you should consider using multipart uploads instead of uploading the object in a single operation.
+
+
+1)Login to AWS Console
+
+2)Create IAM Role EC2S3Role (EC2 --- S3 FullAccess)
+
+3)Create S3 Access (shashi-909)
+
+4)Launch EC2 ,Create Working directory and Load with Huge size file (video.mp4)in to it.
+
+5)Run below command on terminal in Working directory:
+
+1) split -b 60M video.mp4 
+2) ls -lh
+3) aws s3api create-multipart-upload  --bucket shashi-909 --key video.mp4
+   
+    Note:copy upload id and place somewhere else.
+
+4)aws s3api upload-part --bucket shashi-909 --key video.mp4 --part-number 1 --body xaa --upload-id  xxxxx
+
+ repeat above step
+
+5)Prepare list.json
+
+
+
+{
+        "Parts": [
+
+                {
+                        "PartNumber": 1,
+                        "ETag": "\"755978863347957c23ddfd335de1f965\""
+                },
+
+                {
+                        "PartNumber": 2,
+                        "ETag": "\"c5c6bf2385668bdcd74b1592d2246b3a\""
+                },
+
+                {
+                        "PartNumber": 3,
+                        "ETag": "\"cfcc44d8be209176db8c3c18664254a7\""
+                },
+
+                {
+                        "PartNumber": 4,
+                        "ETag": "\"2b3ecea97e26e15e475442aa949c3c46\""
+                },
+
+                {
+                        "PartNumber": 5,
+                        "ETag": "\"5ee7d74aa156a6bc78ace21d1ea9b981\""
+                },
+
+                {
+                        "PartNumber": 6,
+                        "ETag": "\"75554457c87e23246209058fb6dfffe4\""
+                },
+                {
+                        "PartNumber": 7,
+                        "ETag": "\"729df09e2304a857d8d33eda80343269\""
+                }
+
+        ]
+}
+
+
+aws s3api list-multipart-uploads --bucket shashi-909
+
+aws s3api complete-multipart-upload --multipart-upload file://list.json --bucket shashi-909 --key video.mp4 --upload-id  xyzxyz
