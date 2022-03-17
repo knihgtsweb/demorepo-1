@@ -1,0 +1,193 @@
+SECURITY GROUP AND NACL
+
+
+-All public.private and elastic ip adress are attached to e;astic network interface with in the EC2 instance
+
+SG: security group
+-in general we have to specify inbound and uotbound rules for security group
+-1.it works at "instance level"
+-2.security groups are statefull
+-3.we have specify inbound roules
+-4.no need to specify outbound roules
+because by default all traffic allowed at outbound
+
+-log in to your aws account
+-go to security groups
+-filter your vpc id
+-select security group
+
+..................................
+ launchEC2instance
+
+-CASE:-1
+-go to inbound rules 
+-edit inbound rules
+-SELECT SSH (PORT) (ANY WHERE)
+-go to out bound rules 
+-edit outbound rule
+-select all traffic
+-LOGIN putty
+-login:-success
+-ping:- success
+-
+-CASE:-2
+-go to inbound rules 
+-edit inbound rules
+-SELECT SSH (PORT) (ANY WHERE)
+-go to out bound rules 
+-edit outbound rule
+- NONE
+-LOGIN putty(NEW SEASSIONS)
+-login:-success
+-ping:- failed
+-
+-CASE:-3
+-go to inbound rules 
+-edit inbound rules
+-SELECT NONE
+-go to out bound rules 
+-edit outbound rule
+-ALL TRAFFIC
+-LOGIN putty(NEW SEASSIONS)
+-login:-failed
+-ping:- failed
+-
+-CASE:-4
+-go to inbound rules 
+-edit inbound rules
+-SELECT SSH (PORT) (ANY WHERE)
+-go to out bound rules 
+-edit outbound rule
+-SELECT SSH (PORT) (ANY WHERE)
+-LOGIN putty(NEW SEASSIONS)
+-login:-SECCESS
+-ping:- failed
+------------------------------------------------------------------------------------------
+
+                     NACL (Network Access Control List)
+               ...............................................
+
+-in general we have to specify inbound and outbund rules for NACL
+-go to NACL 
+-select your VPC1 (CREATE NACL)
+-VPC1-NACL-1 (for vpc1) 
+-and create NACL
+-click VPC1-NACL1T 
+-select SUBNE ASSOCIATIONS
+-select subnet-1 and save changes
+-
+
+-CASE:-1
+-go to inbound rules 
+-edit inbound rules
+-give roule number (10)
+-SELECT SSH (PORT) (ANY WHERE)
+-go to out bound rules 
+-edit outbound rule
+-give roule number (10)
+-select all traffic
+-LOGIN putty (NEW SEASSIONS)
+-login:-success
+-ping:- failed
+-
+-
+-CASE:-2
+-go to inbound rules 
+-edit inbound rules
+-give roule number (10)
+-SELECT SSH (PORT) (ANY WHERE)
+-go to out bound rules 
+-edit outbound rule
+-NONE
+-LOGIN putty (NEW SEASSIONS)
+-login:-failed
+-ping:- failed
+-
+-CASE:-3
+-go to inbound rules 
+-edit inbound rules
+-NONE
+-go to out bound rules 
+-edit outbound rule
+-give roule number (10)
+-select all traffic
+-LOGIN putty (NEW SEASSIONS)
+-login:-failed
+-ping:- failed
+
+-CASE:-4
+-go to inbound rules 
+-edit inbound rules
+-give roule number (10)
+-SELECT SSH (PORT) (ANY WHERE)
+-go to out bound rules 
+-edit outbound rule
+-give roule number (10)
+-SELECT SSH (PORT) (ANY WHERE)
+-LOGIN putty (NEW SEASSIONS)
+-login:-failed
+-ping:- failed
+
+-CASE:-5
+-go to inbound rules 
+-edit inbound rules
+-give roule number (10)
+-SELECT SSH (PORT) (ANY WHERE)
+-go to out bound rules 
+-edit outbound rule
+-give roule number (10)
+-SELECT CUSTOME TCP (PORT RANGE 1024-65535) AND SAVE CHANGES 
+-LOGIN putty (NEW SEASSIONS)
+-login:-success
+-ping:- failed
+
+GO TO NACL AND DLETE NACL (NOTE NACL IS NOT CHARAGEABLE)S
+
+-TO CHECK EPHEMERAL-PORT NUMBERS
+-https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html#nacl-ephemeral-ports 
+-(aws ephermer docments informtion) 
+-TO CHECK SECURITY GROUP PORT NUMBER
+-
+................................................................./////..........................................................................S
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-

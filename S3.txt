@@ -1,0 +1,340 @@
+S3 SIMPLE STORAGE SERVICE  |
+============================
+
+                    DEMO 1&2 
+                  ============
+NOTE::- IN REAL TIME WE HAVE TO ENABLE BUCKET VERSIONING
+
+1.S3 is a global service.
+2.S3 bucket is having region.
+3.S3 buket is private by default.
+4.S3 object is uploaded into S3 bucket based on storage class.
+
+     1.Standard 
+      2.Standard_IA
+       3.Interlligent IA
+        4.OneZone IA
+         5.Glacier
+          6.Deep Dlacier
+           7.Reduce Redundency (RR)
+
+aws.amazon.com/s3/storage-classes/?nc=sn&loc=3 (S3 documentation link)
+
+-open S3 service in aws surch box
+-click - creat bicket
+-bucket name - demo123 
+-select any region
+-select ACLs enabled
+-block all public access (remove tick mark) 
+-click (i acknowledge)
+-select - creat buket
+-select - demo123 bucket
+-click - upload (upload any files in s3 bucket)
+-cleck add file (and select any files OR videos OR any images )
+-click - properties (check standed is mark or not)
+-tag - name - files (countent name)
+-click upload     (files are uploading)
+-click close
+-select any file and open
+copy - object URL and peast in new tab (file is not showing in google because S3 bucket is public but object is PRIVATE so how to convert this object in to public) 
+-click - object action
+-select make public using ACL
+-click - make public and click - close (check in google page refresh the page object will showing so now object is public)
+- how to remove public for object 
+-select - file 
+-select - permissions - click - edit (publick access) remove tick mark and save changes
+
+-select - all file to make public
+-click - action, - select - make all publick using ACL,-click - make public and click - close
+if remove all permissions to the all files (go to permissions click-edit and remove tick mark and save changes) 
+
+(NOTE::- how do we give permissions for specific users we need to maintain GRANTEES list)  
+-select - any file - click - permissions
+-click - edit - add grantee (give your AWS account id number and save changes)
+
+how to delete s3 bucket
+-click - amazone s3
+-NOTE::- dairectly we can't delete bucket 
+-selec- your bucket - select - one file or all files and click-delete  
+in the box type permanently delete and click - delete object  (NOTE::- file are delete you can also delete bucket - HOW)
+-SELECT YOUR BUCKET AND i type YOUR BUCKET NAME IN THE BOX AND CLICK-DELETE BUCKET)
+
+              DEMO-3&4 CALSS
+             =================
+-click - creat bicket
+-bucket name - sam12345 
+-select any region
+-select ACLs enabled
+-block all public access (remove tick mark) 
+-click (i acknowledge)
+-(NOTE ::-befour creat the bucket enable the bucket versioning)
+-select - creat buket
+
+ ==================================    
+-HOW TO ENABLE BUCKET VERSIONING
+===================================
+
+(NOTE::-WHILE YOUR CREAT A BUCKET YOUR NOE ENABLE THE BUCKET VERSIONING)
+
+-select properties 
+-click - edit and select - enable and click - save
+-open one sample notepad and write som txt (wlcome to cloud service and save the file) 
+-how to upload the file
+-select object and click - upload
+-click add file and select sample file and click upload 
+-and add onther msg in sample file (like:-with devops tools and save)
+-again click - add file - select file and click upload
+-click - show versions ( to see old files)
+-
+-how to creat log bucket 
+-creat source bucket in the same region
+-click - creat bucket
+-bucketname - sam12345-log (example)
+-select - ACLs enabled
+-remove tick mark (block all public access)
+-select i acknowledge
+-click - creat bucket
+-select - sam 12345
+-select properties
+-go to server access logging 
+-click - edit 
+-select - enable
+-click - browse 
+-select - sam12345-log and save changes (it will take 30 ints time to load logs internely)
+-(NOTE:- DO SOME OPERATION LIKE UPLOAD THE FILE DELETE THE FILE LIKE THIS )
+
+-select - properties
+-go to default encryption
+-click-edit
+-select - enable
+-select AWS Key Managemtnt sevice kye(SSE-KMS)
+select Enter AWS KMS key ARN (NOTE::- if you have KMS key go to kms and copy ARN and peast OR select creat kye kms page will open)
+select-symetric and click - next
+name - kms-demo1 - click next 
+select IAMuser1 (NOTE::-if you dont have i am user go to iam and creat one user in iam)
+-click - next 
+-again select - IAMuser1 (NOTE::-giving delete permissions to the same user (IAMuser1) 
+-click - next and click - finish (NOTE:: if you have kms kye don't click finish or click finish KMS KYE ARE CREATED)
+-click - kms-demo1
+-copy - ARN LINK - PAST in browse
+click- save changes
+
+-(NOTE::- SELECT - cusomer-managed kyes - select- kms-demo1-click - action - select - schedule key deletion (waiting period make 7 days) and click schedule deletion)
+-check KMS STATUS (SHOWING PENDING DELETION)
+
+=======================
+-static website hosting
+=======================
+-creat bucket with domine name (bucket name - www.digitals.com)
+-select any region)
+-select - ACLs enabled
+-remove tick mark - block public access
+-click -  i acknowledge
+-click creat bucket
+-select - www.digitals.com
+-click - add file ( select files in desktop)
+-click upload
+-select properties
+-come down 
+-edit - static website hosting and select enable
+-index document name - index.html
+ 
+-( IF YOU HAVE ERROR)
+(NOTE::-ERROR DOCUMENT:- error.html) 
+-click - save changes
+-(NOTE::- GO TO PROPERTIES AND COME DOWN AND CHECK static web hosting - copy - URL past in google it not respond all files are in private - so make all files in  public HOW)
+-GO TO object - select - all files  
+-click action - select - makke public using ACL
+-click make public
+-
+-(go to google refresh the page digital page will come)
+-(this is called static website hosting)
+-
+-               DEMO 5&6
+             ===============
+
+-creat a bucket and upload a files
+-click - management
+-click - lifecycle rule
+-lifecycle rule name - lc-rule-1
+-select - apply to all objects in the bucket
+-select - i acknowledge
+
+1.)select - move current versions of objects between storagae classes
+
+-choose storage class transitions       dayus after object creation
+-select - srandard-IA                             30 days           
+-select - glacier instaant retrievel              60 days           
+-select - glacier deep archive                    150 days
+
+2.)select - Expire current versions of object
+-select -  i acknowledge
+-days after object creation - 365 days
+
+3.)move noncurrent versions of object between storage classes
+
+-select - srandard-IA                             30 days           
+-select - glacier instaant retrievel              60 days           
+-select - glacier deep archive                   150 days
+
+-4.)permanently delete noncurrent versions of object
+-days after become noncurrent - 200 days   
+-
+5.)delete expier object markers or incomplete multipart uploads
+-select - delete incomplete multipart uplods
+-nembers of days - 3 days
+-click -  creat rule
+
+-crose region replica
+======================
+-bucket should not in same region (like 1 bucket in oregon,, 2 bucket in N.Virginia)
+-select -source bucket sam-12345
+-select - properties (NOTE:-check bucket versining is enable OR not IF disable make enable) 
+-again select - target bukcet sam-bkt-1(check bucket versining is enable OR not IF disable make enable)
+-select - management
+-open IAM in new tab
+-select -e roles
+-click - creat roles
+-select - s3 
+-click - next permissions (click next)
+-role name - crr-demo-1
+-click creat role
+-type crr- demo -1 
+-select - crr - demo-1
+-click - add inline policy
+-click - json
+
+============
+JSON SCRIPT
+============
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "s3:Get*",
+                "s3:ListBucket"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+                "arn:aws:s3:::sam-12345",
+                "arn:aws:s3:::sam-12345/*"
+            ]
+        },
+        {
+            "Action": [
+                "s3:ReplicateObject",
+                "s3:ReplicateDelete",
+                "s3:ReplicateTags",
+                "s3:GetObjectVersionTagging"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:s3:::sam-bak-1/*"
+        }
+    ]
+
+-copy json script above and past in json PAGE
+-click review policy
+-name - type - crr-demo-pol-1
+-click creat policy
+-go to se page 
+-click creat
+ 
+-click - replication rule
+-name - crr-1
+-status - enable
+-select - apply to all objects in the buket
+-choose a bucket in anouther account
+-click browes s3
+-select - sam-bkt-1
+-select - choose from existing IAM role
+-type - crr-demo-1
+-select- change the storage the class for replicated object
+-select standarted-IA
+-click - save
+-select - sam-12345 
+-click upload - add files (and select files and click - upload)
+-select - sam-bkt-1 (note:-sam-bkt-1 is target bucket)
+- NOTE:-files are moving source bucket SAM-12345 to target buketSAM-BKT-1)
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
